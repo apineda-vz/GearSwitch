@@ -15,6 +15,7 @@
 ; (modified: register/unregister hotkey changed to Left Ctrl + X to avoid accidental triggers)
 ; (added: Left Alt push-to-talk press/release edge sequences with mouse restore and post-restore nudge)
 ; (modified: q hotkey — send only 'm' unless an input control has focus, in which case send 'q'; fixed to allow typing q while paused/chatting)
+; (added: backslash key -> q in gameplay, normal backslash in chat mode)
 ; =====================================================
 
 #NoEnv
@@ -827,6 +828,19 @@ return
 return
 
 ~*q up::  ; keep keyup passthrough harmless (no action needed on release)
+return
+
+; -----------------------
+; Backslash key:
+; - gameplay: sends q
+; - chat mode: stays normal so you can type it
+; -----------------------
+\::
+if (paused) {
+    SendInput, \
+    return
+}
+SendInput, q
 return
 
 ; =====================================================
